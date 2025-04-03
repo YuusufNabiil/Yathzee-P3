@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="Yathzee.css" />
+    <link rel="fotodocument" href="fotos/" />
+
+    <title>Yathzee</title>
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <p1>Yathzee</p1>
+      </div>
+
+      <br />
+
+      <div class="Dobbelsteeninhoud">
+        <div id="getal1">
+          <img src="fotos/1.png" alt="dobbelsteen met getal 1" />
+        </div>
+
+        <div id="getal2">
+          <img src="fotos/2.png" alt="dobbelsteen met getal 2" />
+        </div>
+
+        <div id="getal3">
+          <img src="fotos/3.png" alt="dobbelsteen met getal 3" />
+        </div>
+
+        <div id="getal4">
+          <img src="fotos/4.png" alt="dobbelsteen met getal 4" />
+        </div>
+
+        <div id="getal5">
+          <img src="fotos/5.png" alt="dobbelsteen met getal 5" />
+        </div>
+      </div>
+      <div class="Dobbelsteeninhoud">
+        <button id="dice" onclick="dobbelsteengooi()">
+          rol de dobbelsteen
+        </button>
+      </div>
+    </header>
+
+    <div class="scorebord">
+      <h2>Yathzee Scorebord</h2>
+      <div class="categorie">
+        <h3>Enkel</h3>
+        <p>eenen: <span class="score" id="score-1">0</span></p>
+        <p>tweeen: <span class="score" id="score-2">0</span></p>
+        <p>drieen: <span class="score" id="score-3">0</span></p>
+        <p>vieren: <span class="score" id="score-4">0</span></p>
+        <p>vijfen: <span class="score" id="score-5">0</span></p>
+        <p>zessen: <span class="score" id="score-6">0</span></p>
+      </div>
+      <div class="categorie">
+        <h3>Extra's</h3>
+        <p>Bonus: <span class="score" id="score-pair-1">0</span></p>
+        <p>Sum: <span class="score" id="score-pair-2">0</span></p>
+      </div>
+      <div class="categorie">
+        <h3>Combinaties</h3>
+        <p>
+          Drie gelijke: <span class="score" id="score-three-of-a-kind">0</span>
+        </p>
+        <p>
+          Vier gelijke: <span class="score" id="score-four-of-a-kind">0</span>
+        </p>
+        <p>Full House: <span class="score" id="score-full-house">0</span></p>
+        <p>
+          Kleine Straat: <span class="score" id="score-small-straight">0</span>
+        </p>
+        <p>
+          Grote Straat: <span class="score" id="score-large-straight">0</span>
+        </p>
+        <p>Yathzee: <span class="score" id="score-yathzee">0</span></p>
+        <p>Chance: <span class="score" id="score-chance">0</span></p>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="yathzee.js"></script>
