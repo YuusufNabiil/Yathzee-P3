@@ -1,144 +1,140 @@
-const dobbelSteen = [
-  document.querySelector("#getal1").querySelector("img"),
-  document.getElementById("getal2").querySelector("img"),
+let dobbelstenen = [
+  document.querySelector("#getal1 img"),
+  document.querySelector("#getal2 img"),
   document.querySelector("#getal3 img"),
-  document.querySelector("#getal4").querySelector("img"),
-  document.getElementById("getal5").querySelector("img"),
+  document.querySelector("#getal4 img"),
+  document.querySelector("#getal5 img"),
 ];
 
-const button = document.getElementById("dice");
+let btnGooi = document.getElementById("dice");
+let aantalBeurten = 3;
+let dice = [1, 1, 1, 1, 1];
+let hold = [false, false, false, false, false];
 
-let dicevalues = [1, 1, 1, 1, 1];
-let holdStatus = [0, 0, 0, 0, 0]; // 0 = niet vast, 1 = vast
-var beurten = 3;
-
-var puntenTabel = {
-  eentjes: document.querySelector("#score-1"),
+let scores = {
+  eentjes: document.getElementById("score-1"),
   tweeën: document.getElementById("score-2"),
-  drie: document.querySelector("#score-3"),
+  drieën: document.getElementById("score-3"),
   vier: document.getElementById("score-4"),
   vijf: document.getElementById("score-5"),
-  zes: document.querySelector("#score-6"),
+  zesjes: document.getElementById("score-6"),
   drieGelijk: document.getElementById("score-three-of-a-kind"),
-  vierGelijk: document.querySelector("#score-four-of-a-kind"),
-  volleBeker: document.getElementById("score-full-house"),
-  straatKlein: document.getElementById("score-small-straight"),
-  straatGroot: document.getElementById("score-large-straight"),
-  yathzee: document.getElementById("score-yathzee"),
-  geluk: document.getElementById("score-chance"),
+  vierGelijk: document.getElementById("score-four-of-a-kind"),
+  fullhouse: document.getElementById("score-full-house"),
+  straatje: document.getElementById("score-small-straight"),
+  groteStraat: document.getElementById("score-large-straight"),
+  yahtzee: document.getElementById("score-yathzee"),
+  kans: document.getElementById("score-chance"),
 };
 
-function randomCijfer() {
-  return Math.floor(Math.random() * (7 - 1)) + 1; // Beetje onnodige berekening
+function dobbel() {
+  return Math.floor(Math.random() * 6) + 1;
 }
 
-function roll() {
-  if (beurten != 0) {
-    for (let index = 0; index < 5; index++) {
-      if (holdStatus[index] == 0) {
-        dicevalues[index] = randomCijfer();
+function rollDice() {
+  if (aantalBeurten > 0) {
+    for (let i = 0; i < 5; i++) {
+      if (!hold[i]) {
+        dice[i] = dobbel();
       }
     }
-    beurten--;
-    updateScherm();
+    aantalBeurten = aantalBeurten - 1;
+    toonDobbels();
   } else {
-    console.log("Geen beurten meer!");
+    alert("Op! Geen beurten meer!");
   }
 }
 
-function hold(nummer) {
-  if (holdStatus[nummer] == 0) {
-    holdStatus[nummer] = 1;
-    dobbelSteen[nummer].style.border = "3px dotted yellow";
+function zetVast(nr) {
+  hold[nr] = !hold[nr];
+  if (hold[nr]) {
+    dobbelstenen[nr].style.border = "3px solid lime";
   } else {
-    holdStatus[nummer] = 0;
-    dobbelSteen[nummer].style.border = "none";
+    dobbelstenen[nr].style.border = "none";
   }
 }
 
-function updateScherm() {
-  for (var teller = 0; teller < dicevalues.length; teller++) {
-    dobbelSteen[teller].src = "fotos/" + dicevalues[teller] + ".png";
+function toonDobbels() {
+  for (let i = 0; i < 5; i++) {
+    dobbelstenen[i].src = "fotos/" + dice[i] + ".png";
   }
-  berekenScore();
+  berekenPunten();
 }
 
-function berekenScore() {
-  let counter = [0, 0, 0, 0, 0, 0];
-  for (let w = 0; w < dicevalues.length; w++) {
-    counter[dicevalues[w] - 1]++;
+function berekenPunten() {
+  let count = [0, 0, 0, 0, 0, 0];
+
+  for (let i = 0; i < 5; i++) {
+    count[dice[i] - 1]++;
   }
 
-  puntenTabel.eentjes.innerText = counter[0];
-  puntenTabel.tweeën.innerText = counter[1] * 2;
-  puntenTabel.drie.innerText = counter[2] * 3;
-  puntenTabel.vier.innerText = counter[3] * 4;
-  puntenTabel.vijf.innerText = counter[4] * 5;
-  puntenTabel.zes.innerText = counter[5] * 6;
+  scores.eentjes.innerText = count[0];
+  scores.tweeën.innerText = count[1] * 2;
+  scores.drieën.innerText = count[2] * 3;
+  scores.vier.innerText = count[3] * 4;
+  scores.vijf.innerText = count[4] * 5;
+  scores.zesjes.innerText = count[5] * 6;
 
-  if (counter.includes(3)) {
-    puntenTabel.drieGelijk.innerText = dicevalues.reduce((a, b) => a + b);
+  if (count.includes(3)) {
+    scores.drieGelijk.innerText = optel(dice);
   } else {
-    puntenTabel.drieGelijk.innerText = "0";
+    scores.drieGelijk.innerText = 0;
   }
 
-  if (counter.includes(4)) {
-    puntenTabel.vierGelijk.innerText = dicevalues.reduce((x, y) => x + y);
+  if (count.includes(4)) {
+    scores.vierGelijk.innerText = optel(dice);
   } else {
-    puntenTabel.vierGelijk.innerText = "0";
+    scores.vierGelijk.innerText = 0;
   }
 
-  let heeftDrie = false;
-  let heeftTwee = false;
-  for (var q = 0; q < counter.length; q++) {
-    if (counter[q] == 3) {
-      heeftDrie = true;
-    }
-    if (counter[q] == 2) {
-      heeftTwee = true;
-    }
+  if (count.includes(3) && count.includes(2)) {
+    scores.fullhouse.innerText = 25;
+  } else {
+    scores.fullhouse.innerText = 0;
   }
-  puntenTabel.volleBeker.innerText = heeftDrie && heeftTwee ? "25" : "0";
 
-  puntenTabel.straatKlein.innerText = checkStraatKlein(counter) ? "30" : "0";
-  puntenTabel.straatGroot.innerText = checkStraatGroot(counter) ? "40" : "0";
-  puntenTabel.yathzee.innerText = counter.includes(5) ? "50" : "0";
-
-  let totaalPunten = 0;
-  for (var c = 0; c < dicevalues.length; c++) {
-    totaalPunten += dicevalues[c];
+  if (
+    (count[0] && count[1] && count[2] && count[3]) ||
+    (count[1] && count[2] && count[3] && count[4]) ||
+    (count[2] && count[3] && count[4] && count[5])
+  ) {
+    scores.straatje.innerText = 30;
+  } else {
+    scores.straatje.innerText = 0;
   }
-  puntenTabel.geluk.innerText = totaalPunten;
+
+  if (
+    (count[0] && count[1] && count[2] && count[3] && count[4]) ||
+    (count[1] && count[2] && count[3] && count[4] && count[5])
+  ) {
+    scores.groteStraat.innerText = 40;
+  } else {
+    scores.groteStraat.innerText = 0;
+  }
+
+  if (count.includes(5)) {
+    scores.yahtzee.innerText = 50;
+  } else {
+    scores.yahtzee.innerText = 0;
+  }
+
+  scores.kans.innerText = optel(dice);
 }
 
-function checkStraatKlein(teller) {
-  return (
-    (teller[0] > 0 && teller[1] > 0 && teller[2] > 0 && teller[3] > 0) ||
-    (teller[1] > 0 && teller[2] > 0 && teller[3] > 0 && teller[4] > 0) ||
-    (teller[2] > 0 && teller[3] > 0 && teller[4] > 0 && teller[5] > 0)
-  );
+function optel(arr) {
+  let som = 0;
+  for (let i = 0; i < arr.length; i++) {
+    som += arr[i];
+  }
+  return som;
 }
 
-function checkStraatGroot(teller) {
-  return (
-    (teller[0] > 0 &&
-      teller[1] > 0 &&
-      teller[2] > 0 &&
-      teller[3] > 0 &&
-      teller[4] > 0) ||
-    (teller[1] > 0 &&
-      teller[2] > 0 &&
-      teller[3] > 0 &&
-      teller[4] > 0 &&
-      teller[5] > 0)
-  );
-}
+btnGooi.addEventListener("click", rollDice);
 
-button.addEventListener("click", roll);
-dobbelSteen.forEach(function (dobbel, nummer) {
-  dobbel.addEventListener("click", function () {
-    hold(nummer);
+for (let i = 0; i < dobbelstenen.length; i++) {
+  dobbelstenen[i].addEventListener("click", function () {
+    zetVast(i);
   });
-});
+}
 
-updateScherm();
+toonDobbels();
