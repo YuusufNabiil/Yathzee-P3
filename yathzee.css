@@ -5,9 +5,20 @@
   font-weight: bold;
   font-size: xx-large;
 }
+.gridcontainer {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 10px;
+  border-width: 5px;
+  border-radius: 30px;
+}
 .Dobbelsteeninhoud {
   display: flex;
   justify-content: center;
+}
+.scorebord {
+  font-family:Arial, Helvetica, sans-serif
+  gap: 70px;
+  padding: 50px;
 }
 .gridcontainer {
   display: grid;
@@ -30,12 +41,9 @@ button .dice {
   display: flex;
   justify-content: center;
 }
-
-.gridcontainer {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  padding: 10px;
-  border-width: 5px;
-  border-radius: 30px;
+.dice {
+  display: flex;
+  justify-content: center;
 }
 img {
   width: 50px;
@@ -45,20 +53,15 @@ img {
 .Dobbelsteeninhoud img:hover{
   opacity: 35%;
 }
-.dice {
-  display: flex;
-  justify-content: center;
+.scorebord h2 {
+  grid-column: 1 / 4;
+  text-align: center;
+  
 }
 .scorebord {
   color: white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-}
-
-.scorebord h2 {
-  grid-column: 1 / 4;
-  text-align: center;
-  
 }
 
 .scorebord .categorie {
@@ -67,8 +70,3 @@ img {
 
 }
 
-.scorebord {
-  font-family:Arial, Helvetica, sans-serif
-  gap: 70px;
-  padding: 50px;
-}

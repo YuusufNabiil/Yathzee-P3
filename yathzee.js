@@ -41,14 +41,14 @@ function rollDice() {
     aantalBeurten = aantalBeurten - 1;
     toonDobbels();
   } else {
-    alert("Op! Geen beurten meer!");
+    alert("je hebt al 3x gegooid en kan niet meer gooien!");
   }
 }
 
 function zetVast(nr) {
   hold[nr] = !hold[nr];
   if (hold[nr]) {
-    dobbelstenen[nr].style.border = "3px solid lime";
+    dobbelstenen[nr].style.border = "3px solid black";
   } else {
     dobbelstenen[nr].style.border = "none";
   }
@@ -68,13 +68,6 @@ function berekenPunten() {
     count[dice[i] - 1]++;
   }
 
-  scores.eentjes.innerText = count[0];
-  scores.tweeën.innerText = count[1] * 2;
-  scores.drieën.innerText = count[2] * 3;
-  scores.vier.innerText = count[3] * 4;
-  scores.vijf.innerText = count[4] * 5;
-  scores.zesjes.innerText = count[5] * 6;
-
   if (count.includes(3)) {
     scores.drieGelijk.innerText = optel(dice);
   } else {
@@ -92,6 +85,13 @@ function berekenPunten() {
   } else {
     scores.fullhouse.innerText = 0;
   }
+
+  scores.eentjes.innerText = count[0];
+  scores.tweeën.innerText = count[1] * 2;
+  scores.drieën.innerText = count[2] * 3;
+  scores.vier.innerText = count[3] * 4;
+  scores.vijf.innerText = count[4] * 5;
+  scores.zesjes.innerText = count[5] * 6;
 
   if (
     (count[0] && count[1] && count[2] && count[3]) ||
